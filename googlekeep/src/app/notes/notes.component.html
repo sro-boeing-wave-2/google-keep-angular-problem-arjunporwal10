@@ -1,0 +1,9 @@
+<h2>My Notes</h2>
+<ul class="notesArray">
+  <li *ngFor="let note of notesArray" routerLink="/detail/{{note.id}}">
+      <a >
+          <span class="badge">{{note.id}}</span><button> {{note.Title}}</button>
+      </a>
+  </li>
+</ul>
+
