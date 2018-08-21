@@ -1,14 +1,16 @@
 <div *ngIf="NoteToDisplay">
 
     <h2> Details</h2>
-    <div><span>id: </span>{{NoteToDisplay.id}}</div>
+    <div><span>Noteid: </span>{{NoteToDisplay.notesId}}</div>
     <div>
-      {{NoteToDisplay.Title}},
-      {{NoteToDisplay.Text}},
-      {{NoteToDisplay.IsPinned}},
-      {{NoteToDisplay.Labels}},
-      {{NoteToDisplay.CheckLists}}
+        <input [(ngModel)]="NoteToDisplay.title" placeholder="title">
+      {{NoteToDisplay.title}},
+      {{NoteToDisplay.text}},
+      {{NoteToDisplay.isPinned}},
+      {{NoteToDisplay.labels}},
+      {{NoteToDisplay.checkLists}}
     </div>
 
     <button (click)="goBack()">Go back</button>
+    <button (click)="save()">save</button>
   </div>

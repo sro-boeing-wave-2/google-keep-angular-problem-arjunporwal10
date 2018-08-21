@@ -3,20 +3,72 @@ import{Note} from './notes';
 import{NotesArray} from './mock-notes';
 import { Observable, of } from 'rxjs';
 import { MessageService } from './message.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, map, tap } from 'rxjs/operators';
+
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
 })
 export class NoteService {
 
-  constructor(private messageService: MessageService) { }
+  constructor(private http: HttpClient,private messageService: MessageService) { }
   getNotes(): Observable<Note[]>  {
-    this.messageService.add('NoteService: fetched notes');
-    return of(NotesArray) ;
+    return this.http.get<Note[]>(this.notesURL)
+    .pipe(
+      tap(notes => this.log('fetched notes')),
+      catchError(this.handleError('getNotes', []))
+    );
+
   }
-  getNote(id: number): Observable<Note> {
-    // TODO: send the message _after_ fetching the hero
-    this.messageService.add(`NoteService: fetched note id=${id}`);
-    return of(NotesArray.find(hero => hero.id === id));
+  getNote(id: string): Observable<Note> {
+    const url = `${this.notesURL}/${id}`;
+    return this.http.get<Note>(url).pipe(
+    tap(_ => this.log(`fetched note id=${id}`)),
+    catchError(this.handleError<Note>(`getNote id=${id}`))
+  );
+
   }
+  /** Log a NoteService message with the MessageService */
+  private log(message: string) {
+  this.messageService.add(`NoteService: ${message}`);
+  }
+
+  /** PUT: update the hero on the server */
+  updateNote (note: Note, id:string): Observable<any> {
+    const url = `${this.notesURL}/${id}`;
+  return this.http.put(url, note, httpOptions).pipe(
+    tap(_ => this.log(`updated note id=${note.id}`)),
+    catchError(this.handleError<any>('updateNote'))
+  );
+  }
+
+
+  private notesURL = 'https://localhost:44310/api/prototype';  // URL to web api
+
+
+  /**
+ * Handle Http operation that failed.
+ * Let the app continue.
+ * @param operation - name of the operation that failed
+ * @param result - optional value to return as the observable result
+ */
+private handleError<T> (operation = 'operation', result?: T) {
+  return (error: any): Observable<T> => {
+
+    // TODO: send the error to remote logging infrastructure
+    console.error(error); // log to console instead
+
+    // TODO: better job of transforming error for user consumption
+    this.log(`${operation} failed: ${error.message}`);
+
+    // Let the app keep running by returning an empty result.
+    return of(result as T);
+  };
+}
+
 }

@@ -23,12 +23,18 @@ export class NoteDetailComponent implements OnInit {
   }
 
   getNote(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('id');
     this.noteService.getNote(id)
       .subscribe(note => this.NoteToDisplay = note);
   }
   goBack(): void {
     this.location.back();
+  }
+  save(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    console.log(this.NoteToDisplay);
+    this.noteService.updateNote(this.NoteToDisplay,id)
+      .subscribe(() => this.goBack());
   }
 
 }
