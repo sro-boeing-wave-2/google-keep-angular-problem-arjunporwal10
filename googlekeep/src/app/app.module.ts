@@ -9,6 +9,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component'; // <-- NgModel lives here
 import { HttpClientModule }    from '@angular/common/http';
+import { NoteSearchComponent } from './note-search/note-search.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { HttpClientModule }    from '@angular/common/http';
     NotesComponent,
     NoteDetailComponent,
     MessagesComponent,
-    DashboardComponent
+    DashboardComponent,
+    NoteSearchComponent
   ],
   imports: [
     BrowserModule,

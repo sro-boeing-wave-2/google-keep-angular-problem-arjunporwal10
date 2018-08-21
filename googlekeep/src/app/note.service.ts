@@ -39,13 +39,42 @@ export class NoteService {
   }
 
   /** PUT: update the hero on the server */
-  updateNote (note: Note, id:string): Observable<any> {
+  updateNote (note: Note, id:string): Observable<Note> {
     const url = `${this.notesURL}/${id}`;
   return this.http.put(url, note, httpOptions).pipe(
     tap(_ => this.log(`updated note id=${note.id}`)),
     catchError(this.handleError<any>('updateNote'))
   );
   }
+  /** POST: add a new hero to the server */
+  addNote (note: Note): Observable<Note> {
+  return this.http.post<Note>(this.notesURL, note, httpOptions).pipe(
+    tap((note: Note) => this.log(`added note w/ id=${note.id}`)),
+    catchError(this.handleError<Note>('addNote'))
+  );
+}
+/** DELETE: delete the hero from the server */
+  deleteNote (note: Note, id:string): Observable<Note> {
+  //const id = typeof note === 'string' ? note : note.id;
+  const url = `${this.notesURL}/${id}`;
+    console.log(url);
+    console.log(id);
+  return this.http.delete<Note>(url, httpOptions).pipe(
+    tap(_ => this.log(`deleted note id=${id}`)),
+    catchError(this.handleError<Note>('deleteNote'))
+  );
+}
+/* GET heroes whose name contains search term */
+searchNotesByQuery(title:string): Observable<Note[]> {
+  // if (!title.trim() ) {
+  //   // if not search term, return empty hero array.
+  //   return of([]);
+  // }
+  return this.http.get<Note[]>(`${this.notesURL}/query?title=${title}`).pipe(
+    tap(_ => this.log(`found notes matching "${title}"`)),
+    catchError(this.handleError<Note[]>('searchNotesByQuery', []))
+  );
+}
 
 
   private notesURL = 'https://localhost:44310/api/prototype';  // URL to web api

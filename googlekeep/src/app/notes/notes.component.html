@@ -2,12 +2,16 @@
 <ul class="notesArray">
   <li *ngFor="let note of notesArray" routerLink="/detail/{{note.id}}">
       <a >
-          <span class="badge">{{note.notesId}}</span><button> {{note.title}}</button>
+          <span class="badge">{{note.notesId}}</span> {{note.title}}
+          <div><button class="delete" title="delete note"
+            (click)="delete(note)">Delete</button>
+          </div>
       </a>
+
   </li>
 </ul>
 <div>
-    <label>Note name:
+    <label>Note title:
       <input #Note />
     </label>
     <!-- (click) passes input value to add() and then clears the input -->
