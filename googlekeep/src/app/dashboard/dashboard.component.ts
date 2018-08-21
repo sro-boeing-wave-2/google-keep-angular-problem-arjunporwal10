@@ -10,6 +10,7 @@ import{NoteService} from '../note.service';
 export class DashboardComponent implements OnInit {
 
   notesArray: Note[] = [];
+  note:Note;
 
   constructor(private noteService: NoteService) { }
 

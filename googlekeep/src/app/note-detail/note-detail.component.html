@@ -1,4 +1,4 @@
-<div *ngIf="NoteToDisplay">
+ <!-- <div *ngIf="NoteToDisplay">
 
     <h2> Details</h2>
     <div><span>Noteid: </span>{{NoteToDisplay.notesId}}</div>
@@ -6,11 +6,150 @@
         <input [(ngModel)]="NoteToDisplay.title" placeholder="title">
       {{NoteToDisplay.title}},
       {{NoteToDisplay.text}},
-      {{NoteToDisplay.isPinned}},
-      {{NoteToDisplay.labels}},
-      {{NoteToDisplay.checkLists}}
+      {{NoteToDisplay.isPinned}}
+      <ul >
+          <li *ngFor="let label of NoteToDisplay.labels">
+            {{label.labelName}}
+            {{label.id}}
+          </li>
+      </ul>
+      <ul >
+          <li *ngFor="let checklist of NoteToDisplay.checkLists">
+            {{checklist.checklistData}}
+            {{checklist.id}}
+            {{checklist.isChecked}}
+          </li>
+      </ul>
+
     </div>
 
     <button (click)="goBack()">Go back</button>
     <button (click)="save()">save</button>
+  </div> -->
+
+<form [formGroup]="NoteEditForm" (ngSubmit)="save()">
+  <label>NoteId:
+    <input formControlName="NoteId" [(ngModel)]="NoteToDisplay.notesId">
+  </label>
+  <label>Title:
+    <input formControlName="Title" [(ngModel)]="NoteToDisplay.title" placeholder="Title" />
+  </label>
+  <label>Text:
+    <input type="text" formControlName="Text" [(ngModel)]="NoteToDisplay.text" />
+  </label>
+  <label>IsPinned:
+    <input type="radio" class="form-control" [(ngModel)]="NoteToDisplay.isPinned" value="true" formControlName="IsPinned" checked/>Yes
+    <input type="radio" class="form-control" [(ngModel)]="NoteToDisplay.isPinned" value="false" formControlName="IsPinned" />No
+  </label>
+
+  <div formArrayName="CheckList">
+    <h2>CheckList</h2>
+    <a (click)="addCheckList()">AddCheckList</a>
+
+    <div *ngFor="let checklist of CheckList.controls; let i = index">
+      <div [formGroupName]="i">
+        <div *ngIf="NoteToDisplay.checkLists[i] != null">
+          <label>CheckList:
+            <input type="text" formControlName="Checklist" [(ngModel)]="NoteToDisplay.checkLists[i].checklistData" />
+          </label>
+          <label>IsChecked:
+            <input type="radio" class="form-control" [(ngModel)]="NoteToDisplay.checkLists[i].isChecked" value="true" formControlName="IsChecked" checked/>Yes
+            <input type="radio" class="form-control" [(ngModel)]="NoteToDisplay.checkLists[i].isChecked" value="false" formControlName="IsChecked" />No
+          </label>
+        </div>
+        <div *ngIf="NoteToDisplay.checkLists[i] == undefined">
+          <label>CheckList:
+            <input type="text" formControlName="Checklist" [(ngModel)]="NoteToDisplay.checkLists[i].isChecked" />
+          </label>
+          <label>IsChecked:
+            <input type="radio" class="form-control" [(ngModel)]="NoteToDisplay.checkLists[i].isChecked" value="true" formControlName="IsChecked" checked/>Yes
+            <input type="radio" class="form-control" [(ngModel)]="NoteToDisplay.checkLists[i].isChecked" value="false" formControlName="IsChecked" />No
+          </label>
+        </div>
+      </div>
+    </div>
   </div>
+  <div formArrayName="Label">
+    <h2>Labels</h2>
+    <a (click)="addLabel()">AddLabels</a>
+    <div *ngFor="let label of Label.controls; let i = index">
+      <div [formGroupName]="i">
+        <div *ngIf="NoteToDisplay.labels[i] !=null">
+          <label>Label:
+            <input type="text" formControlName="label" [(ngModel)]="NoteToDisplay.labels[i].labelName">
+          </label>
+        </div>
+        <div *ngIf="NoteToDisplay.labels[i] == undefined">
+          <label>Label:
+            <input type="text" formControlName="label" >
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button type="submit">submit</button>
+</form>
+
+<!-- <form [formGroup]="NoteEditForm" (ngSubmit)="save()">
+    <label>NoteId:
+      <input formControlName="notesId">
+    </label>
+    <label>Title:
+      <input formControlName="title" placeholder="Title" />
+    </label>
+    <label>Text:
+      <input type="text" formControlName="text" />
+    </label>
+    <label>IsPinned:
+      <input type="radio" class="form-control" value="true" formControlName="isPinned" checked/>Yes
+      <input type="radio" class="form-control" value="false" formControlName="isPinned" />No
+    </label>
+
+    <div formArrayName="checkLists">
+      <h2>CheckList</h2>
+      <a (click)="addCheckList()">AddCheckList</a>
+      <div *ngFor="let checklist of checkLists?.controls; let i = index">
+        <h1>I am Checklistt</h1>
+        <div [formGroupName]="i">
+          <div *ngIf="NoteToDisplay.checkLists[i] != null">
+            <label>CheckList:
+              <input type="text" formControlName="checklists" />
+            </label>
+            <label>IsChecked:
+              <input type="radio" class="form-control" value="true" formControlName="isChecked" checked/>Yes
+              <input type="radio" class="form-control" value="false" formControlName="isChecked" />No
+            </label>
+          </div>
+          <div *ngIf="NoteToDisplay.checkLists[i] == undefined">
+            <label>CheckList:
+              <input type="text" formControlName="checkLists" />
+            </label>
+            <label>IsChecked:
+              <input type="radio" class="form-control" value="true" formControlName="isChecked" checked/>Yes
+              <input type="radio" class="form-control" value="false" formControlName="isChecked" />No
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div formArrayName="labels">
+      <h2>Labels</h2>
+      <a (click)="addLabel()">AddLabels</a>
+      <div *ngFor="let label of labels?.controls; let i = index">
+        <h1>I am Here</h1>
+        <div [formGroupName]="i">
+          <div *ngIf="i!== null">
+            <label>Label:
+              <input type="text" formControlName="i.labelName">
+            </label>
+          </div>
+          <div *ngIf="i==undefined">
+            <label>Label:
+              <input type="text" formControlName="label" >
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="submit">submit</button>
+  </form> -->

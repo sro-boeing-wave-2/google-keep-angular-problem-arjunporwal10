@@ -49,16 +49,15 @@ export class NoteService {
   /** POST: add a new hero to the server */
   addNote (note: Note): Observable<Note> {
   return this.http.post<Note>(this.notesURL, note, httpOptions).pipe(
-    tap((note: Note) => this.log(`added note w/ id=${note.id}`)),
+    tap((note: Note) => this.log(`added note id=${note.id}`)),
     catchError(this.handleError<Note>('addNote'))
   );
 }
 /** DELETE: delete the hero from the server */
-  deleteNote (note: Note, id:string): Observable<Note> {
+  deleteNote (id:string): Observable<Note> {
   //const id = typeof note === 'string' ? note : note.id;
   const url = `${this.notesURL}/${id}`;
-    console.log(url);
-    console.log(id);
+
   return this.http.delete<Note>(url, httpOptions).pipe(
     tap(_ => this.log(`deleted note id=${id}`)),
     catchError(this.handleError<Note>('deleteNote'))

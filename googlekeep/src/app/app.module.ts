@@ -10,6 +10,7 @@ import { AppRoutingModule } from './/app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component'; // <-- NgModel lives here
 import { HttpClientModule }    from '@angular/common/http';
 import { NoteSearchComponent } from './note-search/note-search.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { NoteSearchComponent } from './note-search/note-search.component';
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

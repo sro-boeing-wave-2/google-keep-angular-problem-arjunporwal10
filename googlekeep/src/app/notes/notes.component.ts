@@ -31,7 +31,8 @@ export class NotesComponent implements OnInit {
     title = title.trim();
     if (!title) { return; }
     this.noteService.addNote({
-           notesid:5,
+
+           notesId:5,
            Text: 'BlackCurrent',
            Title:title,
            IsPinned:false,
@@ -41,10 +42,10 @@ export class NotesComponent implements OnInit {
         this.notesArray.push(note);
       });
   }
-  delete(note: Note): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.notesArray = this.notesArray.filter(n => n !== note);
-    this.noteService.deleteNote(note,id).subscribe();
+  delete(id: string): void {
+    //const id = this.route.snapshot.paramMap.get('id');
+    //this.notesArray = this.notesArray.filter(n => n !== note);
+    this.noteService.deleteNote(id).subscribe();
   }
 
 

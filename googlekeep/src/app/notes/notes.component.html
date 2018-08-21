@@ -3,12 +3,13 @@
   <li *ngFor="let note of notesArray" routerLink="/detail/{{note.id}}">
       <a >
           <span class="badge">{{note.notesId}}</span> {{note.title}}
-          <div><button class="delete" title="delete note"
-            (click)="delete(note)">Delete</button>
-          </div>
       </a>
+      <div><button class="delete" title="delete note"
+        (click)="delete(note.id)">Delete</button>
+      </div>
 
   </li>
+
 </ul>
 <div>
     <label>Note title:

@@ -2,8 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Note } from '../notes';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-
-import { NoteService }  from '../note.service';
+import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
+import { NoteService } from '../note.service';
 @Component({
   selector: 'app-note-detail',
   templateUrl: './note-detail.component.html',
@@ -11,12 +11,23 @@ import { NoteService }  from '../note.service';
 })
 export class NoteDetailComponent implements OnInit {
 
-   NoteToDisplay: Note;
+
+  NoteEditForm = this.fb.group({
+    NoteId: [''],
+    Title: [''],
+    Text: [''],
+    IsPinned: [''],
+    CheckList: this.fb.array([]),
+    Label: this.fb.array([])
+  });
+  NoteToDisplay: Note;
+
   constructor(
     private route: ActivatedRoute,
     private noteService: NoteService,
-    private location: Location
-  ) {}
+    private location: Location,
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit(): void {
     this.getNote();
@@ -32,9 +43,28 @@ export class NoteDetailComponent implements OnInit {
   }
   save(): void {
     const id = this.route.snapshot.paramMap.get('id');
+    console.log(this.NoteEditForm.value);
     console.log(this.NoteToDisplay);
-    this.noteService.updateNote(this.NoteToDisplay,id)
+    this.noteService.updateNote(this.NoteToDisplay, id)
       .subscribe(() => this.goBack());
   }
+  get Label() {
+    return this.NoteEditForm.get('Label') as FormArray;
+  }
+  addLabel() {
+    this.Label.push(this.fb.group({
+      label: ['']
+    }));
+  }
+  get CheckList() {
+    return this.NoteEditForm.get('CheckList') as FormArray;
+  }
+  addCheckList() {
+    this.CheckList.push(this.fb.group({
+      Checklist: [''],
+      IsChecked: ['']
+    }));
+  }
+
 
 }

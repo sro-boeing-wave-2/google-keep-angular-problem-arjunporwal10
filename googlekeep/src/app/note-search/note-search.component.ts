@@ -22,6 +22,7 @@ export class NoteSearchComponent implements OnInit {
     this.searchTerms.next(term);
   }
 
+
   ngOnInit(): void {
     this.notes$ = this.searchTerms.pipe(
       // wait 300ms after each keystroke before considering the term
