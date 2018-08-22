@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
 import { NoteService } from '../note.service';
+import { element } from 'protractor';
+import { not } from '@angular/compiler/src/output/output_ast';
 @Component({
   selector: 'app-note-detail',
   templateUrl: './note-detail.component.html',
@@ -30,12 +32,15 @@ export class NoteDetailComponent implements OnInit {
     private noteService: NoteService,
     private location: Location,
     private fb: FormBuilder
+
   ) { }
 
   getNote(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.noteService.getNote(id)
-      .subscribe(note => this.NoteToDisplay = note);
+      .subscribe(note => {
+        this.NoteToDisplay = note;
+    });
   }
   goBack(): void {
     this.location.back();

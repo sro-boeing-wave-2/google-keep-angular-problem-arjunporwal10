@@ -1,66 +1,116 @@
+<mat-card class="note-card-edit">
+  <mat-card-title>
+    This is Your Searched Note
+  </mat-card-title>
+
+  <mat-card-content >
+    <form [formGroup]="NoteEditForm" (ngSubmit)="save()">
+      <table class="content-class">
+        <tr>
+          <td>
+            <mat-form-field>
+              <label>NoteId:</label>
+              <input matInput formControlName="NotesId" [(ngModel)]="NoteToDisplay.notesId" placeholder="Noteid">
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field>
+              <label>Title:</label>
+              <input matInput formControlName="Title" [(ngModel)]="NoteToDisplay.title" placeholder="Title" />
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field>
+              <label>Text:</label>
+              <input type="text" matInput formControlName="Text" [(ngModel)]="NoteToDisplay.text" />
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>IsPinned:</label>
+            <mat-radio-group formControlName="IsPinned">
+              <mat-radio-button [(ngModel)]="NoteToDisplay.isPinned" value="true">Yes</mat-radio-button>
+              <mat-radio-button [(ngModel)]="NoteToDisplay.isPinned" value="false">No</mat-radio-button>
+            </mat-radio-group>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <div formArrayName="CheckLists">
+              <h2>CheckList</h2>
+              <a (click)="addCheckList()">AddCheckList</a>
+
+              <div *ngFor="let checklist of CheckLists.controls; let i = index">
+                <div [formGroupName]="i">
+                  <div *ngIf="NoteToDisplay.checkLists[i] != null">
+                    <mat-form-field>
+                      <label>CheckList:</label>
+                      <input matInput type="text" formControlName="ChecklistData" [(ngModel)] = "NoteToDisplay.checkLists[i].checklistData" />
+                    </mat-form-field>
+
+                    <label>IsChecked: </label>
+                    <mat-radio-group formControlName="IsChecked">
+                      <mat-radio-button  value="true">Yes</mat-radio-button>
+                      <mat-radio-button  value="false">No</mat-radio-button>
+                    </mat-radio-group>
 
 
-<form [formGroup]="NoteEditForm" (ngSubmit)="save()">
-  <label>NoteId:
-    <input formControlName="NotesId" [(ngModel)]="NoteToDisplay.notesId">
-  </label>
-  <label>Title:
-    <input formControlName="Title" [(ngModel)]="NoteToDisplay.title" placeholder="Title" />
-  </label>
-  <label>Text:
-    <input type="text" formControlName="Text" [(ngModel)]="NoteToDisplay.text" />
-  </label>
-  <label>IsPinned:
-    <input type="radio" class="form-control" [(ngModel)]="NoteToDisplay.isPinned" value="true" formControlName="IsPinned" checked/>Yes
-    <input type="radio" class="form-control" [(ngModel)]="NoteToDisplay.isPinned" value="false" formControlName="IsPinned" />No
-  </label>
+                  </div>
 
-  <div formArrayName="CheckLists">
-    <h2>CheckList</h2>
-    <a (click)="addCheckList()">AddCheckList</a>
+                  <div *ngIf="NoteToDisplay.checkLists[i] == undefined">
+                    <mat-form-field>
+                      <label>CheckList: </label>
+                      <input matInput type="text" formControlName="ChecklistData" />
+                    </mat-form-field>
 
-    <div *ngFor="let checklist of CheckLists.controls; let i = index">
-      <div [formGroupName]="i">
-        <div *ngIf="NoteToDisplay.checkLists[i] != null">
-          <label>CheckList:
-            <input type="text" formControlName="ChecklistData" [(ngModel)]="NoteToDisplay.checkLists[i].checklistData" />
-          </label>
-          <label>IsChecked:
-            <input type="radio" class="form-control" [(ngModel)]="NoteToDisplay.checkLists[i].isChecked" value="true" formControlName="IsChecked" checked/>Yes
-            <input type="radio" class="form-control" [(ngModel)]="NoteToDisplay.checkLists[i].isChecked" value="false" formControlName="IsChecked" />No
-          </label>
-        </div>
-        <div *ngIf="NoteToDisplay.checkLists[i] == undefined">
-          <label>CheckList:
-            <input type="text" formControlName="ChecklistData" />
-          </label>
-          <label>IsChecked:
-            <input type="radio" class="form-control"  value="true" formControlName="IsChecked" checked/>Yes
-            <input type="radio" class="form-control"  value="false" formControlName="IsChecked" />No
-          </label>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div formArrayName="Labels">
-    <h2>Labels</h2>
-    <a (click)="addLabel()">AddLabels</a>
-    <div *ngFor="let label of Labels.controls; let i = index">
-      <div [formGroupName]="i">
-        <div *ngIf="NoteToDisplay.labels[i] !=null">
-          <label>Label:
-            <input type="text" formControlName="labelName" [(ngModel)]="NoteToDisplay.labels[i].labelName">
-          </label>
-        </div>
-        <div *ngIf="NoteToDisplay.labels[i] == undefined">
-          <label>Label:
-            <input type="text" formControlName="labelName" >
-          </label>
-        </div>
-      </div>
-    </div>
-  </div>
-  <button type="submit">submit</button>
-</form>
+                    <label>IsChecked: </label>
+                    <mat-radio-group formControlName="IsChecked">
+                      <mat-radio-button value="true">Yes</mat-radio-button>
+                      <mat-radio-button value="false">No</mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div formArrayName="Labels">
+              <h2>Labels</h2>
+              <a (click)="addLabel()">AddLabels</a>
+              <div *ngFor="let label of Labels.controls; let i = index">
+                <div [formGroupName]="i">
+                  <div *ngIf="NoteToDisplay.labels[i] !=null">
+                    <mat-form-field>
+                      <label>Label:</label>
+                      <input matInput type="text" formControlName="labelName" [(ngModel)]="NoteToDisplay.labels[i].labelName">
+                    </mat-form-field>
+                  </div>
+                  <div *ngIf="NoteToDisplay.labels[i] == undefined">
+                    <mat-form-field>
+                      <label>Label: </label>
+                      <input matInput type="text" formControlName="labelName">
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <button type="submit">submit</button>
+
+      </table>
+    </form>
+  </mat-card-content>
+
+
+</mat-card>
+
 <button (click)="goBack()">Go back</button>
-

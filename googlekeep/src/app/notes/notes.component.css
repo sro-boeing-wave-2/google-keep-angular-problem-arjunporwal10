@@ -70,3 +70,13 @@ button.delete {
   background-color: gray !important;
   color: white;
 }
+.note-card-post {
+  max-width: 300px;
+  align-content: center;
+  margin: auto;
+
+}
+.content-class{
+  margin: auto;
+  align-content: center;
+}
