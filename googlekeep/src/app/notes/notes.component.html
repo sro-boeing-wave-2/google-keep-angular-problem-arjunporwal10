@@ -1,22 +1,58 @@
 <h2>My Notes</h2>
 <ul class="notesArray">
   <li *ngFor="let note of notesArray" routerLink="/detail/{{note.id}}">
-      <a >
-          <span class="badge">{{note.notesId}}</span> {{note.title}}
-      </a>
-      <div><button class="delete" title="delete note"
-        (click)="delete(note.id)">Delete</button>
-      </div>
+    <a>
+      <span class="badge">{{note.notesId}}</span> {{note.title}}
+    </a>
+    <div><button class="delete" title="delete note" (click)="delete(note.id)">Delete</button>
+    </div>
 
   </li>
 
 </ul>
 <div>
-    <label>Note title:
-      <input #Note />
-    </label>
-    <!-- (click) passes input value to add() and then clears the input -->
-    <button (click)="add(Note.value); Note.value=''">
-      add
-    </button>
+
+
+<form [formGroup]="NotePostForm" (ngSubmit)="post()">
+  <label>NoteId:
+    <input formControlName="NotesId" >
+  </label>
+  <label>Title:
+    <input formControlName="Title"  />
+  </label>
+  <label>Text:
+    <input type="text" formControlName="Text"  />
+  </label>
+  <label>IsPinned:
+    <input type="radio" class="form-control"  value="true" formControlName="IsPinned" checked/>Yes
+    <input type="radio" class="form-control"  value="false" formControlName="IsPinned" />No
+  </label>
+
+  <div formArrayName="CheckLists">
+    <h2>CheckList</h2>
+    <a (click)="addCheckList()">AddCheckList</a>
+    <div *ngFor="let checklist of CheckLists.controls; let i = index">
+      <div [formGroupName]="i">
+          <label>CheckList:
+            <input type="text" formControlName="ChecklistData"  />
+          </label>
+          <label>IsChecked:
+            <input type="radio" class="form-control"  value="true" formControlName="IsChecked" checked/>Yes
+            <input type="radio" class="form-control"  value="false" formControlName="IsChecked" />No
+          </label>
+      </div>
+    </div>
   </div>
+  <div formArrayName="Labels">
+    <h2>Labels</h2>
+    <a (click)="addLabel()">AddLabels</a>
+    <div *ngFor="let label of Labels.controls; let i = index">
+      <div [formGroupName]="i">
+          <label>Label:
+            <input type="text" formControlName="labelName" >
+          </label>
+      </div>
+    </div>
+  </div>
+  <button type="submit">AddNote</button>
+</form>
