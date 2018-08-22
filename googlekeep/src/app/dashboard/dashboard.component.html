@@ -1,31 +1,29 @@
-
-<app-note-search></app-note-search>
+<app-note-search>
+</app-note-search>
 
 
 <h3>My Notes</h3>
 <div class="grid grid-pad">
-  <a *ngFor="let note of notesArray" class="col-1-4"  routerLink="/detail/{{note.id}}">
+  <a *ngFor="let note of notesArray" class="col-1-4" >
     <div class="module note">
-        <mat-card class="example-card">
-            <mat-card-header>
+      <mat-card class="example-card">
+        <mat-card-header>
 
-              <mat-card-title>{{note.title}}</mat-card-title>
+          <mat-card-title>{{note.title}}</mat-card-title>
 
-            </mat-card-header>
+        </mat-card-header>
 
-            <mat-card-content>
-              <p>
-                {{note.text}}
-              </p>
-            </mat-card-content>
-            <mat-card-actions>
-              <button mat-button>Edit</button>
-              <button mat-button>Delete</button>
-            </mat-card-actions>
-          </mat-card>
+        <mat-card-content>
+          <p>
+            {{note.text}}
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button routerLink="/detail/{{note.id}}">Edit</button>
+          <button mat-button (click)="delete(note.id)">Delete</button>
+
+        </mat-card-actions>
+      </mat-card>
     </div>
   </a>
 </div>
-
-
-

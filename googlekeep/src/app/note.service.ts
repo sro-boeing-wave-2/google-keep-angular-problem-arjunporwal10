@@ -20,7 +20,7 @@ export class NoteService {
   getNotes(): Observable<Note[]>  {
     return this.http.get<Note[]>(this.notesURL)
     .pipe(
-      tap(notes => this.log('fetched notes')),
+
       catchError(this.handleError('getNotes', []))
     );
 
@@ -28,7 +28,7 @@ export class NoteService {
   getNote(id: string): Observable<Note> {
     const url = `${this.notesURL}/${id}`;
     return this.http.get<Note>(url).pipe(
-    tap(_ => this.log(`fetched note id=${id}`)),
+
     catchError(this.handleError<Note>(`getNote id=${id}`))
   );
 
@@ -42,14 +42,14 @@ export class NoteService {
   updateNote (note: Note, id:string): Observable<Note> {
     const url = `${this.notesURL}/${id}`;
   return this.http.put(url, note, httpOptions).pipe(
-    tap(_ => this.log(`updated note id=${note.id}`)),
+
     catchError(this.handleError<any>('updateNote'))
   );
   }
   /** POST: add a new hero to the server */
   addNote (note: Note): Observable<Note> {
   return this.http.post<Note>(this.notesURL, note, httpOptions).pipe(
-    tap((note: Note) => this.log(`added note id=${note.id}`)),
+
     catchError(this.handleError<Note>('addNote'))
   );
 }
@@ -59,7 +59,7 @@ export class NoteService {
   const url = `${this.notesURL}/${id}`;
 
   return this.http.delete<Note>(url, httpOptions).pipe(
-    tap(_ => this.log(`deleted note id=${id}`)),
+
     catchError(this.handleError<Note>('deleteNote'))
   );
 }
@@ -70,7 +70,7 @@ searchNotesByQuery(title:string): Observable<Note[]> {
   //   return of([]);
   // }
   return this.http.get<Note[]>(`${this.notesURL}/query?title=${title}`).pipe(
-    tap(_ => this.log(`found notes matching "${title}"`)),
+
     catchError(this.handleError<Note[]>('searchNotesByQuery', []))
   );
 }
