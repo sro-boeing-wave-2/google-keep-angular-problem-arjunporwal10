@@ -1,4 +1,4 @@
- <!-- <div *ngIf="NoteToDisplay">
+<!-- <div *ngIf="NoteToDisplay">
 
     <h2> Details</h2>
     <div><span>Noteid: </span>{{NoteToDisplay.notesId}}</div>
@@ -29,7 +29,7 @@
 
 <form [formGroup]="NoteEditForm" (ngSubmit)="save()">
   <label>NoteId:
-    <input formControlName="NoteId" [(ngModel)]="NoteToDisplay.notesId">
+    <input formControlName="NotesId" [(ngModel)]="NoteToDisplay.notesId">
   </label>
   <label>Title:
     <input formControlName="Title" [(ngModel)]="NoteToDisplay.title" placeholder="Title" />
@@ -42,15 +42,15 @@
     <input type="radio" class="form-control" [(ngModel)]="NoteToDisplay.isPinned" value="false" formControlName="IsPinned" />No
   </label>
 
-  <div formArrayName="CheckList">
+  <div formArrayName="CheckLists">
     <h2>CheckList</h2>
     <a (click)="addCheckList()">AddCheckList</a>
 
-    <div *ngFor="let checklist of CheckList.controls; let i = index">
+    <div *ngFor="let checklist of CheckLists.controls; let i = index">
       <div [formGroupName]="i">
         <div *ngIf="NoteToDisplay.checkLists[i] != null">
           <label>CheckList:
-            <input type="text" formControlName="Checklist" [(ngModel)]="NoteToDisplay.checkLists[i].checklistData" />
+            <input type="text" formControlName="ChecklistData" [(ngModel)]="NoteToDisplay.checkLists[i].checklistData" />
           </label>
           <label>IsChecked:
             <input type="radio" class="form-control" [(ngModel)]="NoteToDisplay.checkLists[i].isChecked" value="true" formControlName="IsChecked" checked/>Yes
@@ -59,29 +59,29 @@
         </div>
         <div *ngIf="NoteToDisplay.checkLists[i] == undefined">
           <label>CheckList:
-            <input type="text" formControlName="Checklist" [(ngModel)]="NoteToDisplay.checkLists[i].isChecked" />
+            <input type="text" formControlName="ChecklistData" />
           </label>
           <label>IsChecked:
-            <input type="radio" class="form-control" [(ngModel)]="NoteToDisplay.checkLists[i].isChecked" value="true" formControlName="IsChecked" checked/>Yes
-            <input type="radio" class="form-control" [(ngModel)]="NoteToDisplay.checkLists[i].isChecked" value="false" formControlName="IsChecked" />No
+            <input type="radio" class="form-control"  value="true" formControlName="IsChecked" checked/>Yes
+            <input type="radio" class="form-control"  value="false" formControlName="IsChecked" />No
           </label>
         </div>
       </div>
     </div>
   </div>
-  <div formArrayName="Label">
+  <div formArrayName="Labels">
     <h2>Labels</h2>
     <a (click)="addLabel()">AddLabels</a>
-    <div *ngFor="let label of Label.controls; let i = index">
+    <div *ngFor="let label of Labels.controls; let i = index">
       <div [formGroupName]="i">
         <div *ngIf="NoteToDisplay.labels[i] !=null">
           <label>Label:
-            <input type="text" formControlName="label" [(ngModel)]="NoteToDisplay.labels[i].labelName">
+            <input type="text" formControlName="labelName" [(ngModel)]="NoteToDisplay.labels[i].labelName">
           </label>
         </div>
         <div *ngIf="NoteToDisplay.labels[i] == undefined">
           <label>Label:
-            <input type="text" formControlName="label" >
+            <input type="text" formControlName="labelName" >
           </label>
         </div>
       </div>
@@ -89,6 +89,40 @@
   </div>
   <button type="submit">submit</button>
 </form>
+
+<!-- <form [formGroup]="orderForm" (ngSubmit)="save()">
+  <label>NoteId:
+    <input formControlName="NoteId">
+  </label>
+  <label>Title:
+    <input formControlName="Title" placeholder="Title" />
+  </label>
+  <label>Text:
+    <input type="Text" formControlName="Text" />
+  </label>
+  <label>IsPinned:
+    <input type="radio" class="form-control" value="true" formControlName="IsPinned" checked/>Yes
+    <input type="radio" class="form-control" value="false" formControlName="IsPinned" />No
+  </label>
+  <div formArrayName="CheckList" *ngFor="let item of orderForm.get('CheckList').controls; let i = index;">
+    <div [formGroupName]="i">
+      <input formControlName="CheckListData" placeholder="Item CheckListData">
+      <label>IsChecked:
+        <input type="radio" class="form-control" value="true" formControlName="IsChecked" checked/>Yes
+        <input type="radio" class="form-control" value="false" formControlName="IsChecked" />No
+      </label>
+    </div>
+
+    Chosen name: {{ orderForm.controls.CheckList.controls[i].controls.CheckListData.value }}
+  </div>
+  <div formArrayName="Label" *ngFor="let item of orderForm.get('Label').controls; let i = index;">
+    <div [formGroupName]="i">
+      <input formControlName="LabelName" placeholder="Item LabelName">
+    </div>
+    <a (click)="addLabel()">AddLabels</a>
+    Chosen name: {{ orderForm.controls.Label.controls[i].controls.LabelName.value }}
+  </div>
+</form> -->
 
 <!-- <form [formGroup]="NoteEditForm" (ngSubmit)="save()">
     <label>NoteId:
