@@ -12,7 +12,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { NoteSearchComponent } from './note-search/note-search.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { RouterModule } from '@angular/router';
 import {
   MatCardModule,
   MatToolbarModule,
@@ -38,7 +37,6 @@ import {
     NoteSearchComponent
   ],
   imports: [
-    RouterModule,
     BrowserModule,
     BrowserAnimationsModule,
     MatRadioModule,
