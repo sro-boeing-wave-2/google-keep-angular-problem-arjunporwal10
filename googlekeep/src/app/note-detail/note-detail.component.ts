@@ -17,6 +17,7 @@ export class NoteDetailComponent implements OnInit {
   ngOnInit() {
     this.getNote();
   }
+
   NoteEditForm = this.fb.group({
     NotesId: [''],
     Title: [''],
@@ -25,6 +26,7 @@ export class NoteDetailComponent implements OnInit {
     CheckLists: this.fb.array([]),
     Labels: this.fb.array([])
   });
+
   NoteToDisplay: Note;
 
   constructor(
@@ -32,8 +34,9 @@ export class NoteDetailComponent implements OnInit {
     private noteService: NoteService,
     private location: Location,
     private fb: FormBuilder
-
-  ) { }
+  ) {
+    this.NoteToDisplay = new Note();
+  }
 
   getNote(): void {
     const id = this.route.snapshot.paramMap.get('id');

@@ -33,9 +33,9 @@
         <tr>
           <td>
             <label>IsPinned:</label>
-            <mat-radio-group formControlName="IsPinned">
-              <mat-radio-button [(ngModel)]="NoteToDisplay.isPinned" value="true">Yes</mat-radio-button>
-              <mat-radio-button [(ngModel)]="NoteToDisplay.isPinned" value="false">No</mat-radio-button>
+            <mat-radio-group formControlName="IsPinned" [(ngModel)]="NoteToDisplay.isPinned">
+              <mat-radio-button  value="true">Yes</mat-radio-button>
+              <mat-radio-button value="false">No</mat-radio-button>
             </mat-radio-group>
           </td>
         </tr>
@@ -55,7 +55,7 @@
                     </mat-form-field>
 
                     <label>IsChecked: </label>
-                    <mat-radio-group formControlName="IsChecked">
+                    <mat-radio-group formControlName="IsChecked" [(ngModel)] = "NoteToDisplay.checkLists[i].isChecked">
                       <mat-radio-button  value="true">Yes</mat-radio-button>
                       <mat-radio-button  value="false">No</mat-radio-button>
                     </mat-radio-group>
